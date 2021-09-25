@@ -3,6 +3,8 @@ package com.lti.beans;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,10 @@ public class PolicyTickets {
 	
 	@Column(name="DURATION")
 	private double duration;
+	
+	@OneToOne
+	@JoinColumn(name="policyId")
+	private Policy policy;
 
 	public int getTicketId() {
 		return ticketId;

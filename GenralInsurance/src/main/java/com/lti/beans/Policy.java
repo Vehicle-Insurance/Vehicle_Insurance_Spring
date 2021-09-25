@@ -2,9 +2,14 @@ package com.lti.beans;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,7 +37,21 @@ public class Policy {
 	
 	@Column(name="POLICY_COVERAGE_AMOUNT")
 	private double policyCoverageAmount;	
-
+	
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private Users user;
+	
+	@OneToOne
+	@JoinColumn(name="vehicleId")
+	private Vehicle vehicle;
+	
+	@OneToOne(mappedBy="policy",cascade=CascadeType.ALL)
+	private PolicyTickets policyTicket;
+	
+	@OneToMany(mappedBy="policy",cascade=CascadeType.ALL)
+	private Claims claim;
+	
 	public Policy(int policyId, String policyPlan, LocalDate policyStartDate, double policyDuration, String policyFor,
 			double policyPremiumAmount, double policyCoverageAmount) {
 		super();

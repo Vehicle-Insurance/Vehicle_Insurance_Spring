@@ -3,6 +3,8 @@ package com.lti.beans;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +38,10 @@ public class Vehicle {
 	
 	@Column(name="VEHICLE_AGE")
 	private int age;
+	
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private Users user;
 
 	public Vehicle(int vehicleId, String registrationNumber, String registrationState, String manufacturer,
 			String model, String vehicleType, String engineNumber, String chassisNumber, int age) {

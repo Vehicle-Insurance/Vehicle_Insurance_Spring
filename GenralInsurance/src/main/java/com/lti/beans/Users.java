@@ -1,10 +1,13 @@
 package com.lti.beans;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +32,13 @@ public class Users {
 	
 	@Column(name="USER_DATEOFBIRTH")
 	private LocalDate userDateOfBirth;
-
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    List<Policy> policyList;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	List<Vehicle> vehicleList;
+	
 	public int getUserId() {
 		return userId;
 	}
