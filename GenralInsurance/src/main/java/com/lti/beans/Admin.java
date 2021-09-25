@@ -11,78 +11,80 @@ public class Admin {
 
 	@Id
 	@Column(name="ADMIN_ID")
-	private int admin_id;
+	private int adminId;
 	
 	@Column(name="ADMIN_NAME")
-	private String admin_name;
+	private String adminName;
 	
 	@Column(name="ADMIN_EMAIL")
-	private String admin_email;
+	private String adminEmail;
 	
 	@Column(name="ADMIN_PASSWORD")
-	private String admin_password;
+	private String adminPassword;
 	
 	@Column(name="ADMIN_PHONE")
-	private String admin_phone;
+	private String adminPhone;
 
-	public Admin(int admin_id, String admin_name, String admin_email, String admin_password, String admin_phone) {
+	public int getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
+	}
+
+	public String getAdminName() {
+		return adminName;
+	}
+
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+
+	public String getAdminEmail() {
+		return adminEmail;
+	}
+
+	public void setAdminEmail(String adminEmail) {
+		this.adminEmail = adminEmail;
+	}
+
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+
+	public String getAdminPhone() {
+		return adminPhone;
+	}
+
+	public void setAdminPhone(String adminPhone) {
+		this.adminPhone = adminPhone;
+	}
+
+	public Admin(int adminId, String adminName, String adminEmail, String adminPassword, String adminPhone) {
 		super();
-		this.admin_id = admin_id;
-		this.admin_name = admin_name;
-		this.admin_email = admin_email;
-		this.admin_password = admin_password;
-		this.admin_phone = admin_phone;
+		this.adminId = adminId;
+		this.adminName = adminName;
+		this.adminEmail = adminEmail;
+		this.adminPassword = adminPassword;
+		this.adminPhone = adminPhone;
 	}
 
 	public Admin() {
 		super();
 	}
 
-	public int getAdmin_id() {
-		return admin_id;
-	}
-
-	public void setAdmin_id(int admin_id) {
-		this.admin_id = admin_id;
-	}
-
-	public String getAdmin_name() {
-		return admin_name;
-	}
-
-	public void setAdmin_name(String admin_name) {
-		this.admin_name = admin_name;
-	}
-
-	public String getAdmin_email() {
-		return admin_email;
-	}
-
-	public void setAdmin_email(String admin_email) {
-		this.admin_email = admin_email;
-	}
-
-	public String getAdmin_password() {
-		return admin_password;
-	}
-
-	public void setAdmin_password(String admin_password) {
-		this.admin_password = admin_password;
-	}
-
-	public String getAdmin_phone() {
-		return admin_phone;
-	}
-
-	public void setAdmin_phone(String admin_phone) {
-		this.admin_phone = admin_phone;
-	}
-
 	@Override
 	public String toString() {
-		return "Admin [admin_id=" + admin_id + ", admin_name=" + admin_name + ", admin_email=" + admin_email
-				+ ", admin_password=" + admin_password + ", admin_phone=" + admin_phone + "]";
+		return "Admin [adminId=" + adminId + ", adminName=" + adminName + ", adminEmail=" + adminEmail
+				+ ", adminPassword=" + adminPassword + ", adminPhone=" + adminPhone + "]";
 	}
+
+	
 	
 	
 }
