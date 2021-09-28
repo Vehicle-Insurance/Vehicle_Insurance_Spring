@@ -33,6 +33,17 @@ public class Users {
 	@Column(name="USER_DATEOFBIRTH")
 	private LocalDate userDateOfBirth;
 	
+	@Column(name="USER_AADHAR")
+	private String userAadharNo;
+
+	public String getUserAadharNo() {
+		return userAadharNo;
+	}
+
+	public void setUserAadharNo(String userAadharNo) {
+		this.userAadharNo = userAadharNo;
+	}
+
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     List<Policy> policyList;
 	
@@ -88,7 +99,7 @@ public class Users {
 	}
 
 	public Users(int userId, String userName, String userEmail, String userPhone, String userPassword,
-			LocalDate userDateOfBirth) {
+			LocalDate userDateOfBirth, String userAadharNo) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -96,12 +107,14 @@ public class Users {
 		this.userPhone = userPhone;
 		this.userPassword = userPassword;
 		this.userDateOfBirth = userDateOfBirth;
+		this.userAadharNo = userAadharNo;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Users [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPhone="
-				+ userPhone + ", userPassword=" + userPassword + ", userDateOfBirth=" + userDateOfBirth + "]";
+				+ userPhone + ", userPassword=" + userPassword + ", userDateOfBirth=" + userDateOfBirth
+				+ ", userAadharNo=" + userAadharNo + "]";
 	}
 
 	public Users() {
