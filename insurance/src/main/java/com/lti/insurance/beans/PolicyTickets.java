@@ -24,6 +24,36 @@ public class PolicyTickets {
 	@Column(name="DURATION")
 	private double duration;
 	
+	@Column(name="STATUS")
+	private String status;
+	
+	public PolicyTickets(int ticketId, String policyPlan, String requestType, double duration, String status,
+			Policy policy) {
+		super();
+		this.ticketId = ticketId;
+		this.policyPlan = policyPlan;
+		this.requestType = requestType;
+		this.duration = duration;
+		this.status = status;
+		this.policy = policy;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Policy getPolicy() {
+		return policy;
+	}
+
+	public void setPolicy(Policy policy) {
+		this.policy = policy;
+	}
+
 	@OneToOne
 	@JoinColumn(name="policyId")
 	private Policy policy;
@@ -75,7 +105,7 @@ public class PolicyTickets {
 	@Override
 	public String toString() {
 		return "PolicyTickets [ticketId=" + ticketId + ", policyPlan=" + policyPlan + ", requestType=" + requestType
-				+ ", duration=" + duration + "]";
+				+ ", duration=" + duration + ", status=" + status + ", policy=" + policy + "]";
 	}
 	
 	

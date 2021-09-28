@@ -16,7 +16,7 @@ public interface InsuranceDao {
 
 	public abstract void addOrUpdateUser(Users u);
 	public abstract void addOrUpdateAdmin(Admin a);
-	public abstract boolean login(String userId,String password);
+	public abstract String login(int userId,String password);
 	public abstract void addOrUpdateVehicle(Vehicle v);
 	public abstract void addOrUpdatePolicy(Policy p);
 	public abstract void addOrUpdatePolicyTickets(PolicyTickets pt);
@@ -30,4 +30,6 @@ public interface InsuranceDao {
 	public abstract List<Vehicle> getVehiclesByUser(int id);
 	public abstract void removePolicy(Policy p);
 	public abstract void removeClaim(Claims c);
+	public abstract void removePolicyById(int id);
+	public abstract void removeClaimById(int id);
 }

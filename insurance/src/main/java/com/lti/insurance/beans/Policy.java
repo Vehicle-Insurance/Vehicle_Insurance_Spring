@@ -1,6 +1,7 @@
 package com.lti.insurance.beans;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,7 +51,7 @@ public class Policy {
 	private PolicyTickets policyTicket;
 	
 	@OneToMany(mappedBy="policy",cascade=CascadeType.ALL)
-	private Claims claim;
+	private List<Claims> claimList;
 	
 	@OneToOne
 	@JoinColumn(name="transactionId")
@@ -100,12 +101,12 @@ public class Policy {
 		this.policyTicket = policyTicket;
 	}
 
-	public Claims getClaim() {
-		return claim;
+	public List<Claims> getClaim() {
+		return claimList;
 	}
 
-	public void setClaim(Claims claim) {
-		this.claim = claim;
+	public void setClaim(List<Claims> claim) {
+		this.claimList = claim;
 	}
 
 	public Transaction getTransaction() {
@@ -173,7 +174,7 @@ public class Policy {
 
 	public Policy(int policyId, String policyPlan, LocalDate policyStartDate, double policyDuration, String policyFor,
 			double policyPremiumAmount, double policyCoverageAmount, Users user, Vehicle vehicle,
-			PolicyTickets policyTicket, Claims claim, Transaction transaction) {
+			PolicyTickets policyTicket, List<Claims> claim, Transaction transaction) {
 		super();
 		this.policyId = policyId;
 		this.policyPlan = policyPlan;
@@ -185,7 +186,7 @@ public class Policy {
 		this.user = user;
 		this.vehicle = vehicle;
 		this.policyTicket = policyTicket;
-		this.claim = claim;
+		this.claimList = claim;
 		this.transaction = transaction;
 	}
 
