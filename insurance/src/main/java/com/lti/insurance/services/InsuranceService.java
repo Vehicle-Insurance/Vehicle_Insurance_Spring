@@ -1,4 +1,4 @@
-package com.lti.insurance.daos;
+package com.lti.insurance.services;
 
 import java.util.List;
 
@@ -10,9 +10,7 @@ import com.lti.insurance.beans.Transaction;
 import com.lti.insurance.beans.Users;
 import com.lti.insurance.beans.Vehicle;
 
-
-
-public interface InsuranceDao {
+public interface InsuranceService {
 
 	public abstract void addOrUpdateUser(Users u);
 	public abstract void addOrUpdateAdmin(Admin a);

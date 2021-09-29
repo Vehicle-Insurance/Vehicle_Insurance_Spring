@@ -32,7 +32,7 @@ public class Claims {
 	
 	@ManyToOne
 	@JoinColumn(name="policyId")
-	private List<Policy> policyList;
+	private Policy policy;
 	
 	public ClaimStatus getClaimStatus() {
 		return claimStatus;

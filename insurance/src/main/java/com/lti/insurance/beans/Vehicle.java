@@ -43,6 +43,14 @@ public class Vehicle {
 	@JoinColumn(name="userId")
 	private Users user;
 
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
 	public Vehicle(int vehicleId, String registrationNumber, String registrationState, String manufacturer,
 			String model, String vehicleType, String engineNumber, String chassisNumber, int age) {
 		super();
