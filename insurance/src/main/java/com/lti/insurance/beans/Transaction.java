@@ -2,7 +2,10 @@ package com.lti.insurance.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -11,6 +14,8 @@ public class Transaction {
 
 	@Id
 	@Column(name="TRANSACTION_ID")
+	@SequenceGenerator(name="t_seq", initialValue=3001, allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="t_seq")
 	private int transactionId;
 	
 	@Column(name="TRANSACTION_MODE")

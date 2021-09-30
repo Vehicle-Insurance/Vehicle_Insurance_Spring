@@ -6,8 +6,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +19,8 @@ public class Users {
 	
 	@Id
 	@Column(name="USER_ID")
+	@SequenceGenerator(name="user_seq", initialValue=1001, allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_seq")
 	private int userId;
 	
 	@Column(name="USER_NAME")

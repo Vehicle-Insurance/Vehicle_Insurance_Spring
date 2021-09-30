@@ -43,26 +43,20 @@ public class InsuranceServiceImpl implements InsuranceService {
 		dao.addOrUpdateAdmin(a);
 	}
 
-	@Override
-	public String login(int userId, String password) {
-		// TODO Auto-generated method stub
-		String msg=dao.login(userId, password);
-		return msg;
-	}
 
 	@Override
-	public void addOrUpdateVehicle(Vehicle v) {
+	public Vehicle addOrUpdateVehicle(Vehicle v) {
 		// TODO Auto-generated method stub
 		System.out.println("Service layer!!");
-		dao.addOrUpdateVehicle(v);
+		return dao.addOrUpdateVehicle(v);
 
 	}
 
 	@Override
-	public void addOrUpdatePolicy(Policy p) {
+	public Policy addOrUpdatePolicy(Policy p) {
 		// TODO Auto-generated method stub
 		System.out.println("Service layer!!");
-		dao.addOrUpdatePolicy(p);
+		return dao.addOrUpdatePolicy(p);
 	}
 
 	@Override
@@ -80,16 +74,16 @@ public class InsuranceServiceImpl implements InsuranceService {
 	}
 
 	@Override
-	public void addTransaction(Transaction t) {
+	public Transaction addTransaction(Transaction t) {
 		// TODO Auto-generated method stub
 		System.out.println("Service layer!!");
-		dao.addTransaction(t);
+		return dao.addTransaction(t);
 	}
 
 	@Override
-	public void addOrUpdateCliam(Claims c) {
+	public Claims addOrUpdateCliam(Claims c) {
 		// TODO Auto-generated method stub
-		dao.addOrUpdateCliam(c);
+		return dao.addOrUpdateCliam(c);
 	}
 
 	@Override
@@ -164,9 +158,27 @@ public class InsuranceServiceImpl implements InsuranceService {
 	}
 
 	@Override
-	public LoginStatus loginUser(int userId, String pass) {
+	public LoginStatus loginUser(String userId, String pass) {
 		// TODO Auto-generated method stub
 		return dao.loginUser(userId,pass);
+	}
+
+	@Override
+	public Users getUserById(int id) {
+		// TODO Auto-generated method stub
+		return dao.getUserById(id);
+	}
+
+	@Override
+	public Vehicle getVehicle(int id) {
+		// TODO Auto-generated method stub
+		return dao.getVehicle(id);
+	}
+
+	@Override
+	public Transaction getTransaction(int tId) {
+		// TODO Auto-generated method stub
+		return dao.getTransaction(tId);
 	}
 
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.insurance.beans.Admin;
+import com.lti.insurance.beans.ClaimStatus;
+import com.lti.insurance.beans.Claims;
 import com.lti.insurance.beans.LoginStatus;
 import com.lti.insurance.beans.Policy;
 import com.lti.insurance.beans.PolicyTickets;
@@ -44,28 +46,24 @@ public class InsuranceController {
 		service.addOrUpdateAdmin(a);
 	}
 	
-	@GetMapping(value="/login/{id}/{pass}",produces="application/text")
-	public ResponseEntity<String> login(@PathVariable("id") int userId,@PathVariable("pass") String pass) {
-		String msg=service.login(userId, pass);
-		//System.out.println("{'"+msg+"'}");
-		//System.out.println(new String(msg));
-		return ResponseEntity.ok(msg) ;
-	}
-	
 	@GetMapping("/login/{id}/{pass}")
-	public LoginStatus loginUser(@PathVariable("id") int userId,@PathVariable("pass") String pass) {
+	public LoginStatus loginUser(@PathVariable("id") String userId,@PathVariable("pass") String pass) {
 		return service.loginUser(userId, pass);
 	}
 	
-	@PostMapping("/addVehicle")
-	public void addVehicle(@RequestBody Vehicle v) {
+	@PostMapping("/addVehicle/{userId}")
+	public Vehicle addVehicle(@RequestBody Vehicle v,@PathVariable("userId") int id) {
+		v.setUser(service.getUserById(id));
 		System.out.println(v.getUser());
-		service.addOrUpdateVehicle(v);
+		return service.addOrUpdateVehicle(v);
 	}
 	
-	@PostMapping("/addPolicy")
-	public void addPolicy(@RequestBody Policy p) {
-		service.addOrUpdatePolicy(p);
+	@PostMapping("/addPolicy/{uId}/{vId}/{tId}")
+	public Policy addPolicy(@RequestBody Policy p,@PathVariable("uId") int uId,@PathVariable("vId") int vId,@PathVariable("tId") int tId) {
+		p.setUser(service.getUserById(uId));
+		p.setVehicle(service.getVehicle(vId));
+		p.setTransaction(service.getTransaction(tId));
+		return service.addOrUpdatePolicy(p);
 	}
 	
 	@GetMapping("/vehicleByUser/{id}")
@@ -74,13 +72,29 @@ public class InsuranceController {
 	}
 	
 	@PostMapping("/addTransaction")
-	public void addTransaction(@RequestBody Transaction t) {
-		service.addTransaction(t);
+	public Transaction addTransaction(@RequestBody Transaction t) {
+		return service.addTransaction(t);
 	}
 	
 	@PostMapping("/addPolicyTicket")
 	public void addPolicyTicket(@RequestBody PolicyTickets pt) {
 		service.addOrUpdatePolicyTickets(pt);
+	}
+	
+	@GetMapping("/getVehicle/{id}")
+	public Vehicle getVehicle(@PathVariable("id") int id) {
+		return service.getVehicle(id);
+	}
+	
+	@GetMapping("/getClaims")
+	public List<Claims> getPendingClaims(){
+		System.out.println(ClaimStatus.PENDING);
+		return service.getPendingCliams();
+	}
+	
+	@PostMapping("/addClaim")
+	public Claims addCliam(@RequestBody Claims c) {
+		return service.addOrUpdateCliam(c);
 	}
 }
 

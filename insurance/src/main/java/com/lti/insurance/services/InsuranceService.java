@@ -15,13 +15,12 @@ public interface InsuranceService {
 
 	public abstract void addOrUpdateUser(Users u);
 	public abstract void addOrUpdateAdmin(Admin a);
-	public abstract String login(int userId,String password);
-	public abstract void addOrUpdateVehicle(Vehicle v);
-	public abstract void addOrUpdatePolicy(Policy p);
+	public abstract Vehicle addOrUpdateVehicle(Vehicle v);
+	public abstract Policy addOrUpdatePolicy(Policy p);
 	public abstract void addOrUpdatePolicyTickets(PolicyTickets pt);
 	public abstract void renewPolicy(Policy p);
-	public abstract void addTransaction(Transaction t);
-	public abstract void addOrUpdateCliam(Claims c);
+	public abstract Transaction addTransaction(Transaction t);
+	public abstract Claims addOrUpdateCliam(Claims c);
 	public abstract List<Policy> getPolicies(int userId);
 	public abstract List<Claims> getPendingCliams(); 
 	public abstract List<PolicyTickets> getPendingPolicyTickets();
@@ -32,5 +31,8 @@ public interface InsuranceService {
 	public abstract void removePolicyById(int id);
 	public abstract void removeClaimById(int id);
 	public abstract List<Users> getAllUsers();
-	public abstract LoginStatus loginUser(int userId, String pass);
+	public abstract LoginStatus loginUser(String userId, String pass);
+	public abstract Users getUserById(int id);
+	public abstract Vehicle getVehicle(int id);
+	public abstract Transaction getTransaction(int tId);
 }

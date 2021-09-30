@@ -6,11 +6,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +22,8 @@ public class Policy {
 
 	@Id
 	@Column(name="POLICY_ID")
+	@SequenceGenerator(name="p_seq", initialValue=4001, allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="p_seq")
 	private int policyId;
 	
 	@Column(name="POLICY_PLAN")

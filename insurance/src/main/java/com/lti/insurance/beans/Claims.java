@@ -28,21 +28,21 @@ public class Claims {
 	private double claimAmount;
 	
 	@Column(name="CLAIM_STATUS")
-	private ClaimStatus claimStatus;
+	private String claimStatus;
 	
 	@ManyToOne
 	@JoinColumn(name="policyId")
 	private Policy policy;
 	
-	public ClaimStatus getClaimStatus() {
+	public String getClaimStatus() {
 		return claimStatus;
 	}
 
-	public void setClaimStatus(ClaimStatus claimStatus) {
+	public void setClaimStatus(String claimStatus) {
 		this.claimStatus = claimStatus;
 	}
 
-	public Claims(int claimId, LocalDate claimDate, String reasonOfClaim, double claimAmount, ClaimStatus claimStatus) {
+	public Claims(int claimId, LocalDate claimDate, String reasonOfClaim, double claimAmount,String claimStatus) {
 		super();
 		this.claimId = claimId;
 		this.claimDate = claimDate;

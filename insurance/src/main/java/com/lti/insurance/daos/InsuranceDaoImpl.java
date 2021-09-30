@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 
 import com.lti.insurance.beans.Admin;
+import com.lti.insurance.beans.ClaimStatus;
 import com.lti.insurance.beans.Claims;
 import com.lti.insurance.beans.LoginStatus;
 import com.lti.insurance.beans.Policy;
@@ -54,61 +55,20 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		}
 	}
 
+
 	@Override
 	@Transactional
-	public String login(int userId, String password) {
+	public Vehicle addOrUpdateVehicle(Vehicle v) {
 		
 		System.out.println("Dao Layer");
-		if(em.find(Users.class,userId)==null) {
-			if(em.find(Admin.class, userId)!=null) {
-				Admin a=em.find(Admin.class, userId);
-				if(a.getAdminPassword().equals(password))
-				{
-					return "Admin";
-				}
-			}
-		}
-		else {
-			Users u=em.find(Users.class, userId);
-			if(u.getUserPassword().equals(password))
-				return "User";
-		}
-		return "User Does Not Exixts";
-//		String qry="Select a from Admin a where a.adminId=:id and a.adminPassword=:pass";
-//		TypedQuery<Admin> tq=em.createQuery(qry,Admin.class);
-//		tq.setParameter("id",userId);
-//		tq.setParameter("pass", password);
-//		Admin a=tq.getSingleResult();
-//		if(a!=null) {
-//			return "Admin Exists";
-//		}
-//		String qry1="Select u from Users u where u.userId=:id and u.userPassword=:pass";
-//		TypedQuery<Users> tq1=em.createQuery(qry1,Users.class);
-//		tq1.setParameter("id",userId);
-//		tq1.setParameter("pass", password);
-//		Users u=tq1.getSingleResult();
-//		if(u!=null) {
-//			return "User Exists";
-//		}
-//		return "User Does Not Exixts";
+		em.persist(v);
+		System.out.println(v.getVehicleId());
+		return v;
 	}
 
 	@Override
 	@Transactional
-	public void addOrUpdateVehicle(Vehicle v) {
-		
-		System.out.println("Dao Layer");
-		if(em.find(Vehicle.class, v.getVehicleId())==null) {
-			em.persist(v);
-		}
-		else {
-			em.merge(v);
-		}
-	}
-
-	@Override
-	@Transactional
-	public void addOrUpdatePolicy(Policy p) {
+	public Policy addOrUpdatePolicy(Policy p) {
 		
 		System.out.println("Dao Layer");
 		if(em.find(Policy.class, p.getPolicyId())==null) {
@@ -117,6 +77,7 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		else {
 			em.merge(p);
 		}
+		return p;
 	}
 
 	@Override
@@ -142,15 +103,16 @@ public class InsuranceDaoImpl implements InsuranceDao{
 
 	@Override
 	@Transactional
-	public void addTransaction(Transaction t) {
+	public Transaction addTransaction(Transaction t) {
 		
 		System.out.println("Dao Layer");
 		em.persist(t);
+		return t;
 	}
 
 	@Override
 	@Transactional
-	public void addOrUpdateCliam(Claims c) {
+	public Claims addOrUpdateCliam(Claims c) {
 		
 		System.out.println("Dao Layer");
 		if(em.find(Claims.class, c.getClaimId())==null) {
@@ -159,6 +121,7 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		else {
 			em.merge(c);
 		}
+		return c;
 	}
 
 	@Override
@@ -178,7 +141,7 @@ public class InsuranceDaoImpl implements InsuranceDao{
 	public List<Claims> getPendingCliams() {
 		
 		System.out.println("Dao Layer");
-		String str="Select c from Claims c where c.ClaimStatus=:status";
+		String str="Select c from Claims c where c.claimStatus=:status";
 		TypedQuery<Claims> tq=em.createQuery(str,Claims.class);
 		tq.setParameter("status", "PENDING");
 		List<Claims> cliamsList=tq.getResultList();
@@ -275,37 +238,70 @@ public class InsuranceDaoImpl implements InsuranceDao{
 	}
 
 	@Override
-	public LoginStatus loginUser(int userId, String pass) {
+	public LoginStatus loginUser(String userId, String pass) {
 		// TODO Auto-generated method stub
 		LoginStatus ls=new LoginStatus();
-		if(em.find(Users.class,userId)!=null) {
-			Users u=em.find(Users.class, userId);
+		try {
+		String str="select u from Users u where u.userEmail=:id";
+		TypedQuery<Users> tq=em.createQuery(str,Users.class);
+		tq.setParameter("id", userId);
+		Users u=tq.getSingleResult();
+		if(u!=null) {
 			if(u.getUserPassword().equals(pass)) {
-			ls.setUserId(userId);
+			ls.setUserId(u.getUserId());
 			ls.setUserEmail(u.getUserEmail());
 			ls.setUserName(u.getUserName());
 			ls.setUserStatus("Sucess");
 			}
 			else {
-				ls.setUserId(userId);
+				ls.setUserEmail(userId);
 				ls.setUserStatus("Failed");
 			}	
 		}
-		else if(em.find(Admin.class, userId)!=null) {
-			Admin a=em.find(Admin.class, userId);
-			if(a.getAdminPassword().equals(pass)) {
-				ls.setAdminId(userId);
+		}
+		catch(Exception e) {
+			try {
+			String str1="select a from Admin a where a.adminEmail=:id";
+			TypedQuery<Admin> tq1=em.createQuery(str1,Admin.class);
+			tq1.setParameter("id", userId);
+			Admin a=tq1.getSingleResult();
+			if(a!=null) {
+				ls.setAdminId(a.getAdminId());
 				ls.setAdminEmail(a.getAdminEmail());
 				ls.setAdminStatus("Sucess");
 			}
 			else {
 				ls.setAdminStatus("Failed");
+				ls.setUserStatus("Failed");
 			}
-		}
-		else {
-			ls.setUserStatus("Failed");
+			}
+			catch(Exception e1) {
+				ls.setAdminStatus("Failed");
+				ls.setUserStatus("Failed");
+			}
+		
 		}
 		return ls;
+	}
+
+	@Override
+	public Users getUserById(int id) {
+		// TODO Auto-generated method stub
+		return em.find(Users.class, id);
+	}
+
+	@Override
+	public Vehicle getVehicle(int id) {
+		// TODO Auto-generated method stub
+		Vehicle v=em.find(Vehicle.class, id);
+		return v;
+	}
+
+	@Override
+	public Transaction getTransaction(int tId) {
+		// TODO Auto-generated method stub
+		Transaction t=em.find(Transaction.class, tId);
+		return t;
 	}
 
 }
