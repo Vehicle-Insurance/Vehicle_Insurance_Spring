@@ -47,6 +47,18 @@ public class Policy {
 	@JoinColumn(name="vehicleId")
 	private Vehicle vehicle;
 	
+	public List<Claims> getClaimList() {
+		return claimList;
+	}
+
+	public void setClaimList(List<Claims> claimList) {
+		this.claimList = claimList;
+	}
+
+	public Policy() {
+		super();
+	}
+
 	@OneToOne(mappedBy="policy",cascade=CascadeType.ALL)
 	private PolicyTickets policyTicket;
 	

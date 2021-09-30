@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lti.insurance.beans.Admin;
 import com.lti.insurance.beans.Claims;
+import com.lti.insurance.beans.LoginStatus;
 import com.lti.insurance.beans.Policy;
 import com.lti.insurance.beans.PolicyTickets;
 import com.lti.insurance.beans.Transaction;
@@ -271,6 +272,40 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		TypedQuery<Users> tq=em.createQuery(str,Users.class);
 		
 		return tq.getResultList();
+	}
+
+	@Override
+	public LoginStatus loginUser(int userId, String pass) {
+		// TODO Auto-generated method stub
+		LoginStatus ls=new LoginStatus();
+		if(em.find(Users.class,userId)!=null) {
+			Users u=em.find(Users.class, userId);
+			if(u.getUserPassword().equals(pass)) {
+			ls.setUserId(userId);
+			ls.setUserEmail(u.getUserEmail());
+			ls.setUserName(u.getUserName());
+			ls.setUserStatus("Sucess");
+			}
+			else {
+				ls.setUserId(userId);
+				ls.setUserStatus("Failed");
+			}	
+		}
+		else if(em.find(Admin.class, userId)!=null) {
+			Admin a=em.find(Admin.class, userId);
+			if(a.getAdminPassword().equals(pass)) {
+				ls.setAdminId(userId);
+				ls.setAdminEmail(a.getAdminEmail());
+				ls.setAdminStatus("Sucess");
+			}
+			else {
+				ls.setAdminStatus("Failed");
+			}
+		}
+		else {
+			ls.setUserStatus("Failed");
+		}
+		return ls;
 	}
 
 }

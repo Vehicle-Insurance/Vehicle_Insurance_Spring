@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lti.insurance.beans.Admin;
 import com.lti.insurance.beans.Claims;
+import com.lti.insurance.beans.LoginStatus;
 import com.lti.insurance.beans.Policy;
 import com.lti.insurance.beans.PolicyTickets;
 import com.lti.insurance.beans.Transaction;
@@ -160,6 +161,12 @@ public class InsuranceServiceImpl implements InsuranceService {
 	public List<Users> getAllUsers() {
 		// TODO Auto-generated method stub
 		return dao.getAllUsers();
+	}
+
+	@Override
+	public LoginStatus loginUser(int userId, String pass) {
+		// TODO Auto-generated method stub
+		return dao.loginUser(userId,pass);
 	}
 
 }
