@@ -95,10 +95,11 @@ public class InsuranceDaoImpl implements InsuranceDao{
 
 	@Override
 	@Transactional
-	public void renewPolicy(Policy p) {
+	public Policy renewPolicy(Policy p) {
 		
 		System.out.println("Dao Layer");
 		em.merge(p);
+		return p;
 	}
 
 	@Override
@@ -130,10 +131,10 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		
 		System.out.println("Dao Layer");
 		String str="Select u.policyList from Users u where u.userId=:id";
-		TypedQuery<Policy> tq=em.createQuery(str,Policy.class);
-		tq.setParameter("id",userId);
-		List<Policy> policyList=tq.getResultList();
-		return policyList;
+		//TypedQuery<Policy> tq=em.createQuery(str,Policy.class);
+		//tq.setParameter("id",userId);
+		//List<Policy> policyList=tq.getResultList();
+		return em.createQuery(str).setParameter("id",userId).getResultList();
 	}
 
 	@Override
@@ -302,6 +303,22 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		// TODO Auto-generated method stub
 		Transaction t=em.find(Transaction.class, tId);
 		return t;
+	}
+
+	@Override
+	public Policy getPolicyByClaim(int id) {
+		// TODO Auto-generated method stub
+		Claims c=em.find(Claims.class, id);
+		String str="select p from Policy p join p.claimList as c where c.claimId=:id";
+		Query q=em.createQuery(str);
+		q.setParameter("id", id);
+		return (Policy) q.getSingleResult();
+	}
+
+	@Override
+	public Policy getPolicy(int id) {
+		// TODO Auto-generated method stub
+		return em.find(Policy.class, id);
 	}
 
 }

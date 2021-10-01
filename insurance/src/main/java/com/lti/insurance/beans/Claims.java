@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +19,8 @@ public class Claims {
 
 	@Id
 	@Column(name="CLAIM_ID")
+	@SequenceGenerator(name="c_seq", initialValue=1001, allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="c_seq")
 	private int claimId;
 	
 	@Column(name="CLAIM_DATE")
@@ -51,9 +56,16 @@ public class Claims {
 		this.claimStatus = claimStatus;
 	}
 
-	public int getClaimId() {
-		return claimId;
-	}
+	
+	 
+	  
+	  public int getClaimId() { return claimId; }
+	 /* 
+	 * public Policy getPolicy() { return policy; }
+	 * 
+	 */
+	  public void setPolicy(Policy policy) { this.policy = policy; }
+	
 
 	public void setClaimId(int claimId) {
 		this.claimId = claimId;

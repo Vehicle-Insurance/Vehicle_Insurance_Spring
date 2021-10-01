@@ -92,9 +92,30 @@ public class InsuranceController {
 		return service.getPendingCliams();
 	}
 	
-	@PostMapping("/addClaim")
-	public Claims addCliam(@RequestBody Claims c) {
+	@PostMapping("/addClaim/{id}")
+	public Claims addCliam(@RequestBody Claims c,@PathVariable("id") int id) {
+		c.setPolicy(service.getPolicy(id));
 		return service.addOrUpdateCliam(c);
+	}
+	
+	@GetMapping("/getPolicyById/{id}")
+	public List<Policy> getPolicyById(@PathVariable("id") int id){
+		return service.getPolicies(id);
+	}
+	
+	@GetMapping("/getPolicyByClaim/{id}")
+	public Policy getPolicyByClaim(@PathVariable("id") int id) {
+		return service.getPolicyByClaim(id);
+	}
+	
+	@GetMapping("/getPolicy/{id}")
+	public Policy getPolicy(@PathVariable("id") int id) {
+		return service.getPolicy(id);
+	}
+	
+	@PostMapping("/renewPolicy")
+	public Policy renewPolicy(@RequestBody Policy p) {
+		return service.renewPolicy(p);
 	}
 }
 

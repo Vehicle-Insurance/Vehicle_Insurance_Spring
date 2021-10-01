@@ -20,7 +20,7 @@ public interface InsuranceDao {
 	public abstract Vehicle addOrUpdateVehicle(Vehicle v);
 	public abstract Policy addOrUpdatePolicy(Policy p);
 	public abstract void addOrUpdatePolicyTickets(PolicyTickets pt);
-	public abstract void renewPolicy(Policy p);
+	public abstract Policy renewPolicy(Policy p);
 	public abstract Transaction addTransaction(Transaction t);
 	public abstract Claims addOrUpdateCliam(Claims c);
 	public abstract List<Policy> getPolicies(int userId);
@@ -37,4 +37,6 @@ public interface InsuranceDao {
 	public abstract Users getUserById(int id);
 	public abstract Vehicle getVehicle(int id);
 	public abstract Transaction getTransaction(int tId);
+	public abstract Policy getPolicyByClaim(int id);
+	public abstract Policy getPolicy(int id);
 }

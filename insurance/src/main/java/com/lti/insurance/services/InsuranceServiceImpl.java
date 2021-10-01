@@ -67,10 +67,10 @@ public class InsuranceServiceImpl implements InsuranceService {
 	}
 
 	@Override
-	public void renewPolicy(Policy p) {
+	public Policy renewPolicy(Policy p) {
 		// TODO Auto-generated method stub
 		System.out.println("Service layer!!");
-		dao.renewPolicy(p);
+		return dao.renewPolicy(p);
 	}
 
 	@Override
@@ -179,6 +179,18 @@ public class InsuranceServiceImpl implements InsuranceService {
 	public Transaction getTransaction(int tId) {
 		// TODO Auto-generated method stub
 		return dao.getTransaction(tId);
+	}
+
+	@Override
+	public Policy getPolicyByClaim(int id) {
+		// TODO Auto-generated method stub
+		return dao.getPolicyByClaim(id);
+	}
+
+	@Override
+	public Policy getPolicy(int id) {
+		// TODO Auto-generated method stub
+		return dao.getPolicy(id);
 	}
 
 }
