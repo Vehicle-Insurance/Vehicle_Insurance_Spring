@@ -1,6 +1,7 @@
 package com.lti.insurance.daos;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,7 @@ import com.lti.insurance.beans.PolicyTickets;
 import com.lti.insurance.beans.Transaction;
 import com.lti.insurance.beans.Users;
 import com.lti.insurance.beans.Vehicle;
+import com.lti.insurance.exception.InsuranceException;
 
 @Repository
 public class InsuranceDaoImpl implements InsuranceDao{
@@ -27,19 +29,31 @@ public class InsuranceDaoImpl implements InsuranceDao{
 	@PersistenceContext
 	EntityManager em;
 	
+	
 	@Override
 	@Transactional
-	public void addOrUpdateUser(Users u) {
+	public Users addOrUpdateUser(Users u) {
 		
 		System.out.println("Dao Layer"+u);
-		try {
-			Users u1=em.find(Users.class, u.getUserId());
-			em.merge(u);
-		}
-		catch(Exception e) {
-			em.persist(u);
-		}
-		
+			String str="Select u from Users u where u.userEmail=:e";
+			TypedQuery tq=em.createQuery(str,Users.class);
+			tq.setParameter("e", u.getUserEmail());
+			if(tq.getResultList().size()==0) {
+				em.persist(u);
+				return u;
+			}
+			else {
+				throw new InsuranceException("Email already exists");
+				
+			}
+	}
+	
+	
+	public Users getUserByEmail(String mail) {
+		String str="Select u from Users u where u.userEmail=:e";
+		TypedQuery tq=em.createQuery(str,Users.class);
+		tq.setParameter("e", mail);
+		return (Users) tq.getSingleResult();
 	}
 
 	@Override
@@ -319,6 +333,27 @@ public class InsuranceDaoImpl implements InsuranceDao{
 	public Policy getPolicy(int id) {
 		// TODO Auto-generated method stub
 		return em.find(Policy.class, id);
+	}
+	
+	@Override
+    public int Generateotp() {
+        Random rand = new Random(); // instance of random class
+        int upperbound = 100000;
+        // generate random values from 0-24
+        int int_random = rand.nextInt(upperbound);
+        return int_random;
+    }
+
+
+	
+	@Override
+	@Transactional
+	public int setPass(Users u, String pass) {
+		// TODO Auto-generated method stub
+		u.setUserPassword(pass);
+		if(em.merge(u) != null)
+			return 1;
+		return 0;
 	}
 
 }

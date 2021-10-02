@@ -15,7 +15,7 @@ import com.lti.insurance.beans.Vehicle;
 
 public interface InsuranceDao {
 
-	public abstract void addOrUpdateUser(Users u);
+	public abstract Users addOrUpdateUser(Users u);
 	public abstract void addOrUpdateAdmin(Admin a);
 	public abstract Vehicle addOrUpdateVehicle(Vehicle v);
 	public abstract Policy addOrUpdatePolicy(Policy p);
@@ -39,4 +39,7 @@ public interface InsuranceDao {
 	public abstract Transaction getTransaction(int tId);
 	public abstract Policy getPolicyByClaim(int id);
 	public abstract Policy getPolicy(int id);
+	public Users getUserByEmail(String mail);
+	int Generateotp();
+	public abstract int setPass(Users u, String pass);
 }

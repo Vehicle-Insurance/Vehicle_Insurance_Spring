@@ -21,6 +21,9 @@ public class InsuranceServiceImpl implements InsuranceService {
 	@Autowired
 	private InsuranceDao dao;
 	
+	@Autowired
+	private EmailServices emailService;
+	
 	public InsuranceDao getDao() {
 		return dao;
 	}
@@ -30,10 +33,17 @@ public class InsuranceServiceImpl implements InsuranceService {
 	}
 
 	@Override
-	public void addOrUpdateUser(Users u) {
+	public Users addOrUpdateUser(Users u) {
 		// TODO Auto-generated method stub
 		System.out.println("Service layer!!");
-		dao.addOrUpdateUser(u);
+		Users u1=dao.addOrUpdateUser(u);
+		if(u1.getUserId()>0) {
+			String subject="Registration Confirmation";
+            String text="Hi"+u1.getUserName()+"You have succcessfully registered";
+            emailService.sendEmailForNewRegistration(u1.getUserEmail(),text,subject);
+            return u1;
+		}
+		return null;
 	}
 
 	@Override
@@ -191,6 +201,24 @@ public class InsuranceServiceImpl implements InsuranceService {
 	public Policy getPolicy(int id) {
 		// TODO Auto-generated method stub
 		return dao.getPolicy(id);
+	}
+	
+	public int Generateotp(String userEmail) {
+        Users u=dao.getUserByEmail(userEmail);
+        int otp =dao.Generateotp();
+        String subject="OTP";
+        String text="Hi "+" "+ u.getUserName()+" this is your generated otp "+otp;
+        emailService.sendEmailForNewRegistration(u.getUserEmail(),text,subject);
+        System.out.println("Mail sent");
+        return otp;
+    }
+
+	@Override
+	public int setPass(String mail, String pass) {
+		// TODO Auto-generated method stub
+		Users u=dao.getUserByEmail(mail);
+		return dao.setPass(u,pass);
+		
 	}
 
 }

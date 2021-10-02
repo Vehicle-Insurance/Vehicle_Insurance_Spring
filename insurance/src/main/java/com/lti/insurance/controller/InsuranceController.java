@@ -32,8 +32,8 @@ public class InsuranceController {
 	InsuranceService service;
 	
 	@PostMapping("/addUser")
-	public void addUser(@RequestBody Users u) {
-		service.addOrUpdateUser(u);
+	public Users addUser(@RequestBody Users u) {
+		return service.addOrUpdateUser(u);
 	}
 	
 	@GetMapping("/users")
@@ -116,6 +116,16 @@ public class InsuranceController {
 	@PostMapping("/renewPolicy")
 	public Policy renewPolicy(@RequestBody Policy p) {
 		return service.renewPolicy(p);
+	}
+	
+	@GetMapping("/generateOtp/{mail}")
+	public int generateOtp(@PathVariable("mail") String mail) {
+		return service.Generateotp(mail);
+	}
+	
+	@GetMapping("/setPass/{mail}/{pass}")
+	public int setPass(@PathVariable("mail") String mail,@PathVariable("pass") String pass) {
+		return service.setPass(mail,pass);
 	}
 }
 

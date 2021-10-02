@@ -13,7 +13,7 @@ import com.lti.insurance.beans.Vehicle;
 
 public interface InsuranceService {
 
-	public abstract void addOrUpdateUser(Users u);
+	public abstract Users addOrUpdateUser(Users u);
 	public abstract void addOrUpdateAdmin(Admin a);
 	public abstract Vehicle addOrUpdateVehicle(Vehicle v);
 	public abstract Policy addOrUpdatePolicy(Policy p);
@@ -37,4 +37,6 @@ public interface InsuranceService {
 	public abstract Transaction getTransaction(int tId);
 	public abstract Policy getPolicyByClaim(int id);
 	public abstract Policy getPolicy(int id);
+	public abstract int Generateotp(String mail);
+	public abstract int setPass(String mail, String pass);
 }
