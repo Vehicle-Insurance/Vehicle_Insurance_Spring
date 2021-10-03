@@ -281,9 +281,11 @@ public class InsuranceDaoImpl implements InsuranceDao{
 			tq1.setParameter("id", userId);
 			Admin a=tq1.getSingleResult();
 			if(a!=null) {
-				ls.setAdminId(a.getAdminId());
-				ls.setAdminEmail(a.getAdminEmail());
-				ls.setAdminStatus("Sucess");
+				if(a.getAdminPassword().equals(pass)) {
+					ls.setAdminId(a.getAdminId());
+					ls.setAdminEmail(a.getAdminEmail());
+					ls.setAdminStatus("Sucess");
+				}
 			}
 			else {
 				ls.setAdminStatus("Failed");
