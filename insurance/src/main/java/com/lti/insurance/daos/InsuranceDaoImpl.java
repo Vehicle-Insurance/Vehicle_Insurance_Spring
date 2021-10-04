@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 
 import com.lti.insurance.beans.Admin;
-import com.lti.insurance.beans.ClaimStatus;
 import com.lti.insurance.beans.Claims;
 import com.lti.insurance.beans.LoginStatus;
 import com.lti.insurance.beans.Policy;
@@ -36,7 +35,7 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		
 		System.out.println("Dao Layer"+u);
 			String str="Select u from Users u where u.userEmail=:e";
-			TypedQuery tq=em.createQuery(str,Users.class);
+			TypedQuery<Users> tq=em.createQuery(str,Users.class);
 			tq.setParameter("e", u.getUserEmail());
 			if(tq.getResultList().size()==0) {
 				em.persist(u);
@@ -51,9 +50,9 @@ public class InsuranceDaoImpl implements InsuranceDao{
 	
 	public Users getUserByEmail(String mail) {
 		String str="Select u from Users u where u.userEmail=:e";
-		TypedQuery tq=em.createQuery(str,Users.class);
+		TypedQuery<Users> tq=em.createQuery(str,Users.class);
 		tq.setParameter("e", mail);
-		return (Users) tq.getSingleResult();
+		return tq.getSingleResult();
 	}
 
 	@Override
@@ -139,6 +138,7 @@ public class InsuranceDaoImpl implements InsuranceDao{
 		return c;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Policy> getPolicies(int userId) {
@@ -198,6 +198,7 @@ public class InsuranceDaoImpl implements InsuranceDao{
 //		List<Vehicle> vList=q.getResultList();
 //		System.out.println(vList);
 		String str="Select u.vehicleList from Users u where u.userId=:id";
+		@SuppressWarnings("unchecked")
 		List<Vehicle> vList=em.createQuery(str).setParameter("id", id).getResultList();
 		/*
 		 * TypedQuery<Vehicle> tq=em.createQuery(str,Vehicle.class);
@@ -324,7 +325,7 @@ public class InsuranceDaoImpl implements InsuranceDao{
 	@Override
 	public Policy getPolicyByClaim(int id) {
 		// TODO Auto-generated method stub
-		Claims c=em.find(Claims.class, id);
+		//Claims c=em.find(Claims.class, id);
 		String str="select p from Policy p join p.claimList as c where c.claimId=:id";
 		Query q=em.createQuery(str);
 		q.setParameter("id", id);

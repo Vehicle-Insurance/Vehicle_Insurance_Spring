@@ -2,6 +2,11 @@ package com.lti.insurance.exception;
 
 public class InsuranceException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public InsuranceException() {
 		super();
 		// TODO Auto-generated constructor stub
