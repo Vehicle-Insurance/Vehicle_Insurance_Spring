@@ -39,7 +39,7 @@ public class InsuranceServiceImpl implements InsuranceService {
 		Users u1=dao.addOrUpdateUser(u);
 		if(u1.getUserId()>0) {
 			String subject="Registration Confirmation";
-            String text="Hi"+u1.getUserName()+"You have succcessfully registered";
+            String text="Hi "+u1.getUserName()+" You have succcessfully registered";
             emailService.sendEmailForNewRegistration(u1.getUserEmail(),text,subject);
             return u1;
 		}
